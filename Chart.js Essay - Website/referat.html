@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chart.js</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="css/a11y-light.min.css" />
+    <script src="javascript/highlight.min.js"></script>
+    <script src="javascript/navcongif.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="left-nav">
+        <a href="#introduction">Въведение</a>
+        <a href="#how-to-use">Как да използвате Chart.js?</a>
+        <a href="#goodpractices">Добри практики</a>
+        <a id="chart_types" href="#chart_types_section">Видове диаграми</a>
+        <a class="charts" href="#bar_chart">Хистограма</a>
+        <a class="charts" href="#line_chart">Линейна диаграма</a>
+        <a class="charts" href="#scatter_chart">Диаграма на разсейване</a>
+        <a class="charts" href="#pie_and_doughnut_charts"
+          >Кръгова и поничкова диаграма</a
+        >
+        <a class="charts" href="#radar_chart">Радарна диаграма</a>
+        <a class="charts" href="#polar_area">Полярна зонална диаграма</a>
+        <a class="charts" href="#bubble_chart">Мехурчеста диаграма</a>
+        <a class="charts" href="#mixed_chart">Смесена диаграма</a>
+        <a href="#advantages_disadvantages">Предимства и недостатъци</a>
+        <a href="#conclusion">Заключение</a>
+        <a href="#sources">Източници</a>
+      </nav>
+      <main class="main">
+        <header>
+          <h1>Chart.js</h1>
+          <img id="logo" src="img/logo.png" alt="Logo" />
+        </header>
+
+        <section class="mySections">
+          <h2 id="introduction">Въведение</h2>
+          <div>
+            <p>
+              Chart.js е библиотека за изграждане на графики в уеб приложения с
+              помощта на <strong>HTML5 Canvas</strong>. Тя е написана на
+              <strong>JavaScript</strong> и предоставя лесен начин за създаване
+              на различни типове графики, като линейни, кръгови, стълбови и
+              други. Библиотеката е разработена за пръв път през
+              <strong>2013 г.</strong> от <strong>Nick Downie</strong> и
+              оттогава тя е продължила да се развива и подобрява. Тя е с отворен
+              код, което позволява на разработчиците да я променят и да я
+              използват в своите проекти безплатно.
+              <a href="#6th_source"><sup>[6]</sup></a
+              ><br /><br />
+
+              Позволява на разработчиците да настроят всички елементи на
+              графиката, включително цветове, легенди, оси и много други. Тя
+              изисква само малко HTML и JavaScript код, за да се добави към уеб
+              страница и да се генерира графика. Библиотеката е съвместима със
+              всички съвременни уеб браузъри, включително
+              <strong>Chrome, Firefox, Safari</strong> и
+              <strong>Internet Explorer</strong>.<br /><br />
+
+              Chart.js е създадена с използване на
+              <strong>модулен подход</strong>, който позволява на разработчиците
+              да използват само тези функции и модули, които са им необходими.
+              Това я прави изключително гъвкава и лесна за използване. Всички
+              графики, генерирани с Chart.js, могат да се визуализират на
+              мобилни устройства, като те са напълно
+              <strong>респонсивни</strong> и се приспособяват към размера на
+              екрана.
+            </p>
+          </div>
+        </section>
+        <section class="mySections">
+          <h2 id="how-to-use">Как да използвате Chart.js?</h2>
+          <div>
+            <p>
+              <strong>Chart.js</strong> е лесен за използване.<br /><br />
+
+              Първо, добавете връзка към предоставящата
+              <strong>CDN</strong> (мрежа за доставка на съдържание):
+              <a href="#2nd_source"><sup>[2]</sup></a>
+            </p>
+            <p class="desc_box" id="code_1">
+              <strong>Код 1. </strong>Включване на Chart.js библиотеката чрез
+              връзка към CDN
+            </p>
+            <pre><code type="html">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"&gt;&lt;/script&gt;</code></pre>
+            <p>
+              Важно е да споменем, че този <strong>скрипт</strong> трябва да
+              бъде добавен в края на <strong>html</strong> документа, преди
+              затварянето на <strong>body</strong> тагa.
+            </p>
+            <p>
+              След това добавете <strong>canvas</strong> към мястото, където
+              искате да нарисувате диаграмата(в <strong>body</strong> частта):
+            </p>
+            <p class="desc_box" id="code_2">
+              <strong>Код 2.</strong> Създаване на елемент canvas за Chart.js
+              диаграма
+            </p>
+            <pre><code>&lt;canvas id="myChart"&gt;&lt;/canvas&gt;</code></pre>
+            <p>
+              Елементът <strong>canvas</strong> трябва да има уникален
+              идентификатор.<br /><br />
+              След като добавите елемента <strong>canvas</strong>, можете да
+              започнете да конфигурирате диаграмата. Първо, трябва да определите
+              контекста на елемента <strong>canvas</strong>. Това може да стане
+              с помощта на следния код:
+            </p>
+            <p class="desc_box" id="code_3">
+              <strong>Код 3.</strong> Получаване на контекст на canvas
+            </p>
+            <pre><code type="html">var ctx = document.getElementById('myChart').getContext('2d');</code></pre>
+            <p>
+              След това, можете да създадете нов обект от тип
+              <strong>Chart</strong> и да конфигурирате типа на диаграмата и
+              масивите с данни, както в следния пример:
+            </p>
+            <p class="desc_box" id="code_4">
+              <strong>Код 4.</strong> Създаване на примерна линейна диаграма с
+              Chart.js
+            </p>
+            <pre><code type="javascript">var myChart2 = new Chart(ctx, {
+  type: "line",
+  data: {
+      labels: [
+      "Януари",
+      "Февруари",
+      "Март",
+      "Април",
+      "Май",
+      "Юни",
+      "Юли",
+      ],
+      datasets: [
+      {
+          label: "Посещения на проект Chart.js",
+          data: [8, 10, 10, 14, 19, 19, 15],
+          borderColor: "rgb(255, 99, 132)",
+          fill: false,
+      },
+      ],
+  },
+  options: {},
+});</code></pre>
+            <p>
+              В този пример създадохме <strong>линейна диаграма</strong> с масив
+              от месеци за хоризонталната ос и масив от стойности за
+              вертикалната ос. Допълнително, поставихме етикет и настроихме
+              цвета на границата. След малко ще разберем повече за опциите,
+              между които можем да избираме при създаването на нашата
+              диаграма.<br /><br />
+              А сега нека видим как изглежда горният пример:
+            </p>
+            <p class="desc_box" id="figure_1">
+              <strong>Фигура 1.</strong> Примерна линейна диаграма
+            </p>
+
+            <div class="chart-container">
+              <canvas id="exampleChart"></canvas>
+            </div>
+            <p>
+              С помощта на
+              <strong>Chart.js</strong> можете да създавате множество различни
+              видове диаграми, включително кръгови, стълбови, графики с точки и
+              други. Различните опции и настройки позволяват персонализиране на
+              визуалния стил на диаграмите.
+            </p>
+          </div>
+        </section>
+        <section class="mySections">
+          <h2 id="goodpractices">Добри практики при използване на Chart.js</h2>
+          <div>
+            <ol>
+              <li>
+                <b
+                  >Изберете правилния тип графика за визуализиране на вашите
+                  данни</b
+                >
+                - Chart.js предоставя много типове графики като линейни,
+                стълбови, кръгови, диаграми за разпределение и т.н. Изберете
+                този, който е най-подходящ за вашите данни и изисквания за
+                визуализация.
+              </li>
+              <li>
+                <strong>Подгответе данните си</strong> - Chart.js изисква
+                определен формат на данните за визуализация. Уверете се, че
+                вашите данни са в правилния формат, преди да ги подадете към
+                библиотеката.
+              </li>
+              <li>
+                <strong>Изберете правилните настройки за графиката</strong> -
+                Chart.js предлага много настройки за персонализиране на
+                графиката, като цветове, шрифтове, легенда и много други.
+                Изберете настройките, които са най-подходящи за вашата графика и
+                приложение.
+              </li>
+              <li>
+                <strong>Използвайте анимацията на графиката</strong> - Chart.js
+                предоставя вградена анимация за графиките, която може да бъде
+                изключена или персонализирана. Използвайте анимацията, за да
+                направите вашата графика по-динамична и привлекателна.
+              </li>
+              <li>
+                <strong>Използвайте събитията на графиката </strong>- Chart.js
+                поддържа различни събития като натискане на елемент, преместване
+                на мишката върху елемент и други. Използвайте тези събития, за
+                да добавите повече функционалност и интерактивност към вашата
+                графика.
+              </li>
+              <li>
+                <strong>Използвайте Chart.js с други библиотеки </strong>-
+                Chart.js може да бъде използван в комбинация с други библиотеки
+                като jQuery и React. Използвайте тези комбинации, за да добавите
+                още функционалност към вашата графика и да я интегрирате
+                по-добре във вашето приложение.
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section id="chart_types_section">
+          <h2>Видове диаграми</h2>
+        </section>
+        <section class="myCharts">
+          <h3 id="bar_chart">Хистограма</h3>
+          <p>
+            Хистограмите се създават, като се зададе тип
+            <strong>bar</strong> (за да обърнете посоката на баровете, задайте
+            тип <strong>horizontalBar</strong>). Цветовете на лентите се задават
+            чрез подаване на един цвят към
+            <strong>backgroundColor</strong> (всички ленти ще имат един и същ
+            цвят) или масив от цветове. Ако подавате масив (както в примера
+            по-долу), цветовете се присвояват на етикета и номера, които имат
+            един и същ индекс в съответните масиви. Т.е. по-долу,
+            <strong>София</strong> е първият етикет, ще бъде зададен на
+            <strong>rgba(255, 99, 132, 0.2)</strong> (първият цвят) и
+            <strong>1221172</strong> (първото число).
+            <a href="#3rd_source"><sup>[3]</sup></a>
+          </p>
+          <p class="desc_box" id="code_5">
+            <strong>Код 5.</strong> Създаване на елемент canvas за Chart.js
+            графика
+          </p>
+          <pre><code type="html">&lt;canvas id="barChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_6">
+            <strong>Код 6.</strong> Създаване на примерна хистограма с Chart.js
+          </p>
+          <pre><code type="javascript">let ctx = document.getElementById('barChart').getContext('2d');
+let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['София', 'Пловдив', 'Варна', 'Бургас', 'Русе', 'Стара Загора'],
+        datasets: [{
+            label: 'Преброявания на населението - 2021 г.',
+            data: [1221172, 349070, 332686, 198035, 133813, 124599],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Преброявания на населението - 2021 г.'
+        }
+    }
+});</code></pre>
+          <p>
+            В <strong>options</strong> имаме опцията да конфигурираме
+            <strong>legend</strong>, която задава дали легендата на графика ще
+            се показва или не. В този случай
+            <strong>display: false</strong>
+            означава, че легендата няма да се показва.
+          </p>
+          <p>
+            В <strong>options</strong> също можем да конфигурираме
+            <strong>title</strong> като тази опция задава заглавието на графика.
+            В случая <strong>display: true</strong> означава, че заглавието ще
+            се показва, а
+            <strong>text: 'Преброявания на населението - 2021 г.'</strong> е
+            текстът на заглавието, който се изобразява.
+          </p>
+          <p class="desc_box" id="figure_2">
+            <strong>Фигура 2.</strong> Примерна хистограма
+          </p>
+          <div class="chart-container">
+            <canvas id="barChart"></canvas>
+          </div>
+        </section>
+
+        <section class="myCharts">
+          <h3 id="line_chart">Линейна диаграма</h3>
+          <p>
+            Линейните диаграми се създават, като се зададе типът на
+            <strong>'line'</strong>. Тъй като вече видяхме един по-прост пример
+            за линейна диаграма, нека разгледаме следния пример:
+          </p>
+          <p class="desc_box" id="figure_3">
+            <strong>Фигура 3.</strong> Примерна линейна диаграма
+          </p>
+          <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+          </div>
+          <p>
+            По подразбиране линиите са с тъмно прозрачно запълване, което
+            покрива областта между линията и оста x. Смятам, че тези запълвания
+            са склонни да затъмняват други редове, затова можем да ги премахнем
+            чрез <strong>fill: false</strong>.
+            <a href="#3rd_source"><sup>[3]</sup></a>
+            Диаграмата сега изглежда по следния начин:
+          </p>
+          <p class="desc_box" id="figure_4">
+            <strong>Фигура 4.</strong> Примерна линейна диаграма
+          </p>
+          <div class="chart-container">
+            <canvas id="lineChart2"></canvas>
+          </div>
+          <p>Нека сега разгледаме кода:</p>
+          <p class="desc_box" id="code_7">
+            <strong>Код 7.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="lineChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_8">
+            <strong>Код 8.</strong> Създаване на примерна линейна диаграма с
+            Chart.js
+          </p>
+          <pre><code>new Chart(document.getElementById("lineChart"), {
+    type: 'line',
+    data: {
+      labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+      datasets: [{ 
+          data: [86,114,106,106,107,111,133,221,783,2478],
+          label: "Африка",
+          borderColor: "#3e95cd",
+          fill:false
+        }, { 
+          data: [282,350,411,502,635,809,947,1402,3700,5267],
+          label: "Азия",
+          borderColor: "#8e5ea2",
+          fill:false
+        }, { 
+          data: [168,170,178,190,203,276,408,547,675,734],
+          label: "Европа",
+          borderColor: "#3cba9f",
+          fill:false
+        }, { 
+          data: [40,20,10,16,24,38,74,167,508,784],
+          label: "Латинска Америка",
+          borderColor: "#e8c3b9",
+          fill:false
+        }, { 
+          data: [6,3,2,2,7,26,82,172,312,433],
+          label: "Северна Америка",
+          borderColor: "#c45850",
+          fill:false
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Световна популация за регион (в милиони)'
+      }
+    }
+});</code></pre>
+          <p>
+            Даденият код е свързан с изобразяване на световната популация на
+            различните региони в милиони за определен период от време. Многото
+            данни в <strong>data</strong> представлява редица от числови данни
+            за всяка една година, която се определя от масива на етикетите
+            <strong>(labels)</strong> в горната част на кода. Тези числови данни
+            показват световната популация за съответния регион за всяка една
+            година, която е избрана в масива на етикетите. В общия случай,
+            данните <strong>(data)</strong> са представени като масив от обекти,
+            като всеки обект съдържа информация за един регион, съответния масив
+            от данни за популацията му и визуални настройки за представянето му
+            на диаграмата <strong>(label,backgroundColor и fill)</strong>.
+          </p>
+        </section>
+        <section class="myCharts">
+          <h3 id="scatter_chart">Диаграма на разсейване</h3>
+          <p>
+            Диаграмите на разсейване се основават на линейните диаграми, като
+            <strong>оста x</strong> е променена на <strong>линейна ос</strong>.
+            За да се използва диаграма на разсейване, данните трябва да се
+            предадат като обекти, съдържащи свойства <strong>X</strong> и
+            <strong>Y</strong>. Примерът по-долу създава диаграма на разсейване
+            с 4 точки.<a href="#1st_source"><sup>[1]</sup></a>
+          </p>
+          <p class="desc_box" id="figure_5">
+            <strong>Фигура 4.</strong> Примерна диаграма на разсейване
+          </p>
+          <div class="chart-container">
+            <canvas id="scatterChart"></canvas>
+          </div>
+          <p>Нека сега разгледаме кода:</p>
+          <p class="desc_box" id="code_9">
+            <strong>Код 9.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="scatterChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_10">
+            <strong>Код 10.</strong> Създаване на примерна диаграма на
+            разсейване с Chart.js
+          </p>
+          <pre><code>new Chart(document.getElementById("scatterChart"), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Точки',
+      data: [{
+        x: -0.5,
+        y: 0.3
+      }, {
+        x: 0.1,
+        y: 1
+      }, {
+        x: 1,
+        y: 0.5
+      }, {
+        x: -0.8,
+        y: 0.2
+      }, {
+        x: -0.1,
+        y: 0.3
+      }, {
+        x: 0.9,
+        y: 0.05
+      }, {
+        x: 0.5,
+        y: 0.5
+      }],
+      backgroundColor: 'rgb(255, 99, 132)'
+    }],
+  },
+  options: {},
+});</code></pre>
+          <p>
+            Задаваме <strong>type</strong> на диаграмата да е
+            <strong>"scatter"</strong> (разсейване) . Имаме група от точки в
+            двумерна координатна система, като във всяка точка са зададени две
+            стойности(<strong>x</strong> и <strong>y</strong>), като
+            <strong>x</strong> е позицията по хоризонталната ос (абсциса), а
+            <strong>y</strong> е позицията по вертикалната ос (ордината). В
+            диаграмата има общо седем точки, които са обозначени с различни
+            цветове. В този конкретен случай, в опциите на диаграмата не са
+            зададени никакви допълнителни настройки, което означава, че те са
+            зададени по подразбиране.
+          </p>
+        </section>
+        <section class="myCharts">
+          <h3 id="pie_and_doughnut_charts">Кръгова и поничкова диаграма</h3>
+          <p>
+            Най-често използваните диаграми са кръговата и поничковата диаграма.
+            Те са разделени на сегменти, като дъгата на всеки сегмент показва
+            пропорционалната стойност на всяка част от данните. Отлично се
+            справят да показват съотношенията между данните. Диаграмите
+            <strong>"Pie"</strong> и <strong>"Doughnut"</strong> на практика са
+            един и същ клас в Chart.js, но имат една различна стойност по
+            подразбиране - изрязването им <strong>(cutout)</strong>. Това
+            обозначава каква част от вътрешността трябва да бъде изрязана. По
+            подразбиране е <strong>'0%'</strong> за кръговите диаграми и
+            <strong>'50%'</strong> за поничковите. Те също така са регистрирани
+            под два псевдонима в ядрото на библиотеката. Освен различната
+            стойност по подразбиране и различния псевдоним, те са напълно
+            еднакви.<a href="#1st_source"><sup>[1]</sup></a>
+          </p>
+          <div>
+            <p class="desc_box" id="figure_6">
+              <strong>Фигура 6.</strong> Примерна кръгова диаграма
+            </p>
+            <p class="desc_box" id="figure_7">
+              <strong>Фигура 7.</strong> Примерна поничкова диаграма
+            </p>
+          </div>
+          <div class="chart-container" id="pie-and-doughnut-chart">
+            <canvas id="pieChart"></canvas>
+            <canvas id="doughnutChart"></canvas>
+          </div>
+          <p class="desc_box" id="code_11">
+            <strong>Код 11.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="pieChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_12">
+            <strong>Код 12.</strong> Създаване на примерна кръгова диаграма с
+            Chart.js
+          </p>
+          <pre><code type="javascript">new Chart(document.getElementById("pieChart"), {
+    type: 'pie',
+    data: {
+      labels: ["Африка", "Азия", "Европа", "Латинска Америка", "Северна Америка"],
+      datasets: [{
+        label: "Популация (в милиони)",
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        data: [2478,5267,734,784,433]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Прогнозирано световно население (в милиони) за 2050 г.'
+      }
+    }
+});</code></pre>
+          <p>
+            Единствената разлика в кода на <strong>Doughnut</strong> диаграмата
+            е именно полето <strong>type</strong>, където като стойност е
+            поставено <strong>"doughnut"</strong>. Освен тази разлика, всичко
+            останало в двата кода е идентично.
+          </p>
+        </section>
+        <section class="myCharts">
+          <h3 id="radar_chart">Радарна диаграма</h3>
+          <p>
+            Радарните диаграми - известни още като уеб диаграми, паякови
+            диаграми, звездни диаграми - се създават чрез задаване на
+            <strong>'type'</strong> на <strong>'radar'</strong>. Радарните
+            диаграми обикновено изискват повече вертикално пространство от
+            другите графики, за да бъдат четливи, така че може да се наложи да
+            промените пропорциите на графиката.
+            <a href="#3rd_source"><sup>[3]</sup></a>
+            Ето пример за такава диаграма:
+          </p>
+          <p class="desc_box" id="figure_8">
+            <strong>Фигура 8.</strong> Примерна радарна диаграма
+          </p>
+          <div class="chart-container">
+            <canvas id="radarChart"></canvas>
+          </div>
+          <p class="desc_box" id="code_13">
+            <strong>Код 13.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="radarChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_14">
+            <strong>Код 14.</strong> Създаване на примерна радарна диаграма с
+            Chart.js
+          </p>
+          <pre><code type="javascript">new Chart(document.getElementById("radarChart"), {
+  type: 'radar',
+  data: {
+    labels: ["Африка", "Азия", "Европа", "Латинска Америка", "Северна Америка"],
+    datasets: [
+      {
+        label: "1950",
+        fill: true,
+        backgroundColor: "rgba(179,181,198,0.2)",
+        borderColor: "rgba(179,181,198,1)",
+        pointBorderColor: "#fff",
+        pointBackgroundColor: "rgba(179,181,198,1)",
+        data: [8.77,55.61,21.69,6.62,6.82]
+      }, {
+        label: "2050",
+        fill: true,
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        pointBorderColor: "#fff",
+        pointBackgroundColor: "rgba(255,99,132,1)",
+        data: [25.48,54.16,7.61,8.06,4.45]
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Разпределение в % от световното население'
+    }
+  }
+});</code></pre>
+          <p>
+            В посочения код, нови опции за промяна на визуаните настройки, които
+            са използвани са
+            <strong>pointBackgroundColor</strong> и
+            <strong>pointBorderColor</strong>. Те са параметри, които управляват
+            визуализацията на <strong>точките</strong>, които се показват на
+            графиката, като <strong>pointBorderColor</strong> определя цвета на
+            рамката на точките, a <strong>pointBackgroundColor</strong> задава
+            цвета на фона на точките.
+          </p>
+        </section>
+        <section class="myCharts">
+          <h3 id="polar_area">Полярна зонална диаграма</h3>
+          <p>
+            Полярна зонална диаграма се създава като зададем
+            <strong>'type'</strong> да е <strong>'polarArea'</strong>. Полярните
+            зонални диаграми са тясно свързани с кръговите диаграми, с тази
+            разлика, че радиусът на всеки елемент е зададен в зависимост от
+            неговата стойност. <a href="#3rd_source"><sup>[3]</sup></a>
+          </p>
+          <p class="desc_box" id="figure_9">
+            <strong>Фигура 9.</strong> Примерна полярна зонална диаграма
+          </p>
+          <div class="chart-container">
+            <canvas id="polarChart"></canvas>
+          </div>
+          <p class="desc_box" id="code_15">
+            <strong>Код 15.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="polarChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_16">
+            <strong>Код 16.</strong> Създаване на примерна полярна зонална
+            диаграма с Chart.js
+          </p>
+          <pre><code type="javascript">new Chart(document.getElementById("polarChart"), {
+    type: 'polarArea',
+    data: {
+      labels: ["Африка", "Азия", "Европа", "Латинска Америка", "Северна Америка"],
+      datasets: [
+        {
+          label: "Популация (в милиони)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Прогнозирано световно население (в милиони) за 2050 г.'
+      }
+    }
+});</code></pre>
+        </section>
+        <section class="myCharts">
+          <h3 id="bubble_chart">Мехурчеста диаграма</h3>
+          <p>
+            Мехурчестите диаграми могат да бъдат чудесни за визуализиране на
+            много различни типове от данни едновременно. Te показват три
+            различни данни в една диаграма -
+            <strong>големина на мехурчето, хоризонтална позиция</strong> и
+            <strong>вертикална позиция</strong>. Този тип диаграма се използва
+            за сравняване на данни, като позволява на потребителя да визуализира
+            големината на данните, както и тяхната позиция върху диаграмата.
+          </p>
+          <p>
+            Примерната диаграма визуализира
+            <strong>Брутния вътрешен продукт</strong> (БВП), населението и
+            продължителността на живота в четири държави: Америка, Китай, Япония
+            и Германия. Всяка държава е представена с мехурче, като
+            <strong>размерът</strong> на мехурчето представлява
+            продължителността на живота, позицията му върху оста
+            <strong>X</strong> представлява БВП, а върху оста
+            <strong>Y</strong> - населението. Колкото по-голямо е мехурчето,
+            толкова по-голяма е продължителността на живота в съответната
+            държава. Колкото по в дясно е позиционирано мехурчето, толкова
+            по-голям е БВП на държавата, а колкото по-наляво е позициониран,
+            толкова по-малко е БВП. Същевременно, колкото по-нагоре е
+            позиционирано мехурчето, толкова по-голямо е населението на
+            държавата.
+          </p>
+          <p class="desc_box" id="figure_10">
+            <strong>Фигура 10.</strong> Примерна мехурчеста диаграма
+          </p>
+          <div class="chart-container">
+            <canvas id="bubbleChart"></canvas>
+          </div>
+          <p class="desc_box" id="code_17">
+            <strong>Код 17.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="bubbleChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_18">
+            <strong>Код 18.</strong> Създаване на примерна мехурчеста диаграма с
+            Chart.js
+          </p>
+          <pre><code type="javascript">new Chart(document.getElementById("bubbleChart"), {
+    type: 'bubble',
+    data: {
+      datasets: [
+        {
+          label: "Америка",
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderColor: "transparent",
+          data: [
+            {
+                x: 19390604,  // Брутен вътрешен продукт (БВП)
+                y: 329064917, // Население
+                r: 79.1, // Продължителност на живота
+            }
+          ]
+        },
+        {
+          label: "Китай",
+          backgroundColor: "rgba(54, 162, 235, 0.5)",
+          borderColor: "transparent",
+          data: [
+            {
+                x: 14342932,  // Брутен вътрешен продукт (БВП)
+                y: 1403500365,  // Население
+                r: 76.9,  // Продължителност на живота
+            }
+          ]
+        },
+        {
+          label: "Япония",
+          backgroundColor: "rgba(255, 206, 86, 0.5)",
+          borderColor: "transparent",
+          data: [
+            {
+              x: 5082467, // Брутен вътрешен продукт (БВП)
+              y: 126860301, // Население
+              r: 84.6, // Продължителност на живота
+            }
+          ]
+        },
+        {
+          label: "Германия",
+          backgroundColor: "rgba(75, 192, 192, 0.5)",
+          borderColor: "transparent",
+          data: [
+            {
+              x: 4029143, // Брутен вътрешен продукт (БВП)
+              y: 83783942, // Население
+              r: 80.9, // Продължителност на живота
+            }
+          ]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Брутен вътрешен продукт, население и продължителност на живота',
+      },
+      scales: {
+        yAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'Популация'
+            },
+            ticks: {
+                min: -600000000, // минимална стойност за оста у
+                max: 2000000000, // максимална стойност за оста у
+                stepSize: 200000000 // стъпка между стойностите на оста у
+              }
+        }],
+        xAxes: [{
+            scaleLabel: {
+                display: true,
+                labelString: 'БВП (щ.д.)'
+          },
+          ticks: {
+            min: 2240000, // минимална стойност за оста x
+            max: 21170000, // максимална стойност за оста x
+            stepSize: 10000 // стъпка между стойностите на оста x
+          }
+        }],
+      }
+    }
+}); </code></pre>
+          <p>
+            В <strong>options</strong> на тази диаграма, имаме обект
+            <strong>scales</strong>, който позволява да се настроят различни
+            мащабиращи оста параметри за <strong>x</strong> и
+            <strong>y</strong> координатите на графиката. В общия случай, тези
+            параметри са настройки на границите и стъпките на мащабиране, за да
+            се осигури правилната визуализация на данните. В обекта
+            <strong>scales</strong>, опциите за оста на
+            <strong>y</strong> координатата могат да се конфигурират с
+            <strong>yAxes</strong>, докато за оста на
+            <strong>x</strong> координатата - с <strong>xAxes</strong>. В този
+            код, се използва още <strong>scaleLabel</strong> за да се добавят
+            метаданни към остите - това е текстов етикет, който показва каква
+            информация представлява дадената ос.<br />
+            Използваните опции за мащабиране са следните:
+          </p>
+          <ul></ul>
+          <ul>
+            <li>
+              <strong>ticks</strong> - конфигурира мащабирането на всяка от
+              стойностите на оста. Тук може да се зададе минимална и максимална
+              стойност, както и стъпката между тях.
+            </li>
+            <ul>
+              <li>
+                <strong>min</strong> и <strong>max</strong> - тези параметри
+                задават минималната и максималната стойност на оста.
+              </li>
+              <li>
+                <strong>stepSize</strong> - това е стъпката между стойностите на
+                остата.
+              </li>
+            </ul>
+          </ul>
+          <p>
+            Обикновено мащабирането се прави автоматично, но с
+            <strong>scales</strong> можем да променяме тези настройки, за да се
+            получи желаното представяне на данните.
+          </p>
+        </section>
+        <section class="myCharts">
+          <h3 id="mixed_chart">Смесена диаграма</h3>
+          <p>
+            Смесените диаграми в <strong>Chart.js</strong> успява да комбинира
+            различни видове диаграми (като линейни, стълбови и кръгови диаграми)
+            в една диаграма. Това позволява на потребителя да показва няколко
+            вида данни на една и съща диаграма и може да бъде полезно в
+            ситуации, в които трябва да се сравняват или анализират заедно
+            различни видове данни. Ето и един пример за смесена диаграма
+            обединяваща <strong>линейна диаграма</strong>, показваща тенденцията
+            на броя на посетителите на уебсайта във времето, заедно с
+            <strong>хистограма</strong>, показваща броя на покупките, направени
+            на уебсайта през същия период.
+          </p>
+          <p class="desc_box" id="figure_11">
+            <strong>Фигура 11.</strong> Примерна смесена диаграма
+          </p>
+          <div class="chart-container">
+            <canvas id="mixedChart"></canvas>
+          </div>
+          <p class="desc_box" id="code_19">
+            <strong>Код 19.</strong> Създаване на елемент canvas за Chart.js
+            диаграма
+          </p>
+          <pre><code type="html">&lt;canvas id="mixedChart"&gt;&lt;/canvas&gt;</code></pre>
+          <p class="desc_box" id="code_20">
+            <strong>Код 20.</strong> Създаване на примерна смесена диаграма с
+            Chart.js
+          </p>
+          <pre><code type="javascript">new Chart(document.getElementById("mixedChart"), {
+    type: 'bar',
+    data: {
+      labels: ["Януари", "Февруари", "Март",  "Април", "Май", "Юни", "Юли"],
+      datasets: [{
+          label: 'Посетители',
+          type:'line',
+          data: [500, 750, 670, 900, 1200, 1050, 1020],
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2
+        }, {
+          label: 'Поръчки',
+          type:'bar',
+          data: [50, 75, 58, 125, 80, 160, 180],
+          backgroundColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Брой посетители на уебсайт и покупки'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+});</code></pre>
+          <p>
+            <strong>Options</strong> обектът представлява настройките на
+            диаграмата. Този обект може да съдържа много различни настройки,
+            като заглавие на диаграмата, мащаби на осите, цветове, форматиране
+            на линии, кутии и т.н.
+            <br />
+            В конкретния пример, обектът options съдържа следните настройки:
+          </p>
+          <ul>
+            <li>
+              <strong>responsive: true</strong> - тази настройка позволява на
+              диаграмата да се реагира на промяната на размера на контейнера, в
+              който се намира. Това ще каже, че когато размерът на контейнера се
+              промени, диаграмата ще се промени автоматично, за да се адаптира
+              към новия размер.
+            </li>
+            <li>
+              <strong
+                >title: {display: true, text: 'Брой посетители на уебсайт и
+                покупки'}</strong
+              >
+              - тази настройка задава заглавието на диаграмата. Параметърът
+              <strong>display</strong> определя дали заглавието трябва да бъде
+              показано, а параметърът <strong>text</strong> задава самото
+              заглавие.
+            </li>
+            <li>
+              <strong>scales: {yAxes: [{ticks: {beginAtZero: true}}]}</strong> -
+              тази настройка определя мащабите на y-оса на диаграмата.
+              <strong>yAxes</strong> указва, че се използва само една y-ос, а
+              <strong>ticks</strong> определя началото и края на оса.
+              <strong>beginAtZero: true</strong> гарантира, че y-осата ще
+              започне от нулата.
+            </li>
+          </ul>
+          <p>
+            <strong>Options</strong> обектът е много важен за кастъмизирането на
+            визуализацията на данните в диаграмата. Той позволява на потребителя
+            да променя външния вид и функционалността на диаграмата според
+            нуждите и изискванията на конкретния проект.
+          </p>
+        </section>
+        <section class="mySections" id="advantages_disadvantages">
+          <h2>Предимства и недостатъци</h2>
+          <h3>Предимства</h3>
+          <div>
+            <p>
+              Chart.js предоставя на потребителите много възможности. А ето и
+              някои от тях:
+            </p>
+            <ul>
+              <li>
+                Шест различни анимирани изгледа за визуализиране на данните.
+              </li>
+              <li>
+                Възможности за персонализиране, както и разширения за
+                интерактивност.
+              </li>
+              <li>
+                Различни видове интерактивни диаграми за показване на данни.
+              </li>
+              <li>Използването му е напълно безплатно.</li>
+              <li>
+                Aктуализирането, премахването и модифицирането на данни от
+                диаграма е лесно и безпроблемно.
+              </li>
+              <li>
+                Благодарение на простата си структура Chart. js може да
+                съхранява максимален брой данни в минимално пространство.
+              </li>
+              <li>Диаграмите са напълно адаптивни.</li>
+              <li>
+                Много плъгини са достъпни за използване чрез NPM и дори можете
+                да пишете и собствени плъгини.
+              </li>
+            </ul>
+          </div>
+          <h3>Недостатъци</h3>
+          <div>
+            <p>
+              Освен многобройните предимства, Chart.js все пак има и следните
+              недостатъци:
+            </p>
+            <ul>
+              <li>Chart. js показва само подобен тип данни с вариации.</li>
+              <li>
+                Инсталацията на Chart.js поддържа показване само на графики и
+                диаграми. Липсва му гъвкавостта, предлагана от други опции.
+              </li>
+              <li>
+                Елементът canvas е базиран на растерно изображение. Той има
+                същите проблеми като невекторните формати.
+                <a href="#7th_source"><sup>[7]</sup></a>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section class="mySections" id="conclusion">
+          <h2>Заключение</h2>
+          <div>
+            <p>
+              Chart.js е една от най-добрите библиотеки за визуализация на данни
+              на пазара, която може да бъде използвана от уеб разработчици на
+              всички нива. Тя предоставя бърз и лесен начин за създаване на
+              интерактивни графики и предоставя много опции за персонализиране
+              на външния вид и функционалността на графиките.
+              <br /><br />
+              Освен това, тази библиотека е с отворен код и има голяма общност
+              от разработчици, които активно я поддържат и разширяват. Това
+              означава, че съществува голям избор от документация, ръководства и
+              примери, които могат да бъдат полезни при работата с нея.
+              <br /><br />Също така, Chart.js е съвместима със всички модерни
+              уеб браузъри и може да бъде интегрирана лесно във всеки проект.
+              Ако искате да добавите визуални елементи към вашето уеб
+              приложение, Chart.js може да бъде един от най-добрите инструменти,
+              които можете да използвате.
+            </p>
+          </div>
+        </section>
+        <section class="mySections" id="sources">
+          <h2>Използвани източници:</h2>
+          <div id="references">
+            <p id="1st_source">
+              [1]
+              <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>,
+              "Simple yet flexible JavaScript charting for designers &
+              developers", последно посетен на 2023-04-17.
+            </p>
+            <p id="2nd_source">
+              [2]
+              <a
+                href="https://www.w3schools.com/ai/ai_chartjs.asp"
+                target="_blank"
+                >W3Schools</a
+              >, "AI - Chart.js", последно посетен на 2023-04-17.
+            </p>
+            <p id="3rd_source">
+              [3]
+              <a
+                href="https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started"
+                target="_blank"
+                >Tobias Ahlin</a
+              >, "10 Chart.js example charts to get you started", последно
+              посетен на 2023-04-17.
+            </p>
+            <p id="4th_source">
+              [4]
+              <a
+                href="https://preview.keenthemes.com/start-html-free/documentation/charts/chartjs.html"
+                target="_blank"
+                >Keenthemes Start HTML Chart.js Documentation</a
+              >, "Documentation on how to use Chart.js, a flexible JavaScript
+              charting library for designers and developers", последно посетен
+              на 2023-05-01.
+            </p>
+            <p id="5th_source">
+              [5]
+              <a
+                href="https://coreui.io/react/docs/components/chart/"
+                target="_blank"
+                >CoreUI React Chart.js Component Documentation</a
+              >, "Documentation on how to use the Chart.js component within the
+              CoreUI React library", последно посетен на 2023-05-01.
+            </p>
+            <p id="6th_source">
+              [6]
+              <a href="https://en.wikipedia.org/wiki/Chart.js" target="_blank"
+                >Chart.js Wikipedia page</a
+              >, "A free and open-source JavaScript library for data
+              visualization, particularly for charts on websites", последно
+              посетен на 2023-05-01.
+            </p>
+            <p id="7th_source">
+              [7]
+              <a
+                href="https://www.tutorialspoint.com/chartjs/index.htm"
+                target="_blank"
+                >Chart.js Tutorialspoint page</a
+              >, "A comprehensive tutorial on Chart.js, a JavaScript library for
+              creating interactive and customizable charts and graphs", последно
+              посетен на 2023-05-01.
+            </p>
+          </div>
+
+          <h2>Списък с фигури:</h2>
+          <div>
+            <p id="1st_figure">
+              <a href="#figure_1"
+                ><strong>Фигура 1.</strong> Примерна линейна диаграма</a
+              >
+            </p>
+
+            <p id="2nd_figure">
+              <a href="#figure_2"
+                ><strong>Фигура 2.</strong> Примерна хистограма</a
+              >
+            </p>
+            <p id="3rd_figure">
+              <a href="#figure_3"
+                ><strong>Фигура 3.</strong> Примерна линейна диаграма</a
+              >
+            </p>
+            <p id="4th_figure">
+              <a href="#figure_4"
+                ><strong>Фигура 4.</strong> Примерна линейна диаграма</a
+              >
+            </p>
+            <p id="5th_figure">
+              <a href="#figure_5"
+                ><strong>Фигура 5.</strong> Примерна диаграма на разсейване</a
+              >
+            </p>
+            <p id="6th_figure">
+              <a href="#figure_6"
+                ><strong>Фигура 6.</strong> Примерна кръгова диаграма</a
+              >
+            </p>
+            <p id="7th_figure">
+              <a href="#figure_7"
+                ><strong>Фигура 7.</strong> Примерна поничкова диаграма</a
+              >
+            </p>
+            <p id="8th_figure">
+              <a href="#figure_8"
+                ><strong>Фигура 8.</strong> Примерна радарна диаграм</a
+              >
+            </p>
+            <p id="9th_figure">
+              <a href="#figure_9"
+                ><strong>Фигура 9.</strong> Примерна полярна зонална диаграма</a
+              >
+            </p>
+            <p id="10th_figure">
+              <a href="#figure_10"
+                ><strong>Фигура 10.</strong> Примерна мехурчеста диаграма</a
+              >
+            </p>
+            <p id="11th_figure">
+              <a href="#figure_11"
+                ><strong>Фигура 11.</strong> Примерна смесена диаграма</a
+              >
+            </p>
+          </div>
+
+          <h2>Списък с кодове:</h2>
+          <div>
+            <p id="1st_code">
+              <a href="#code_1"
+                ><strong>Код 1.</strong> Включване на Chart.js библиотеката чрез
+                връзка към CDN</a
+              >
+            </p>
+
+            <p id="2nd_code">
+              <a href="#code_2"
+                ><strong>Код 2.</strong> Създаване на елемент canvas за Chart.js
+                диаграма</a
+              >
+            </p>
+            <p id="3rd_code">
+              <a href="#code_3"
+                ><strong>Код 3.</strong> Получаване на контекст на canvas</a
+              >
+            </p>
+            <p id="4th_code">
+              <a href="#code_4"
+                ><strong>Код 4.</strong> Създаване на примерна линейна диаграма
+                с Chart.js</a
+              >
+            </p>
+            <p id="5th_code">
+              <a href="#code_5"
+                ><strong>Код 5.</strong> Създаване на елемент canvas за Chart.js
+                графика</a
+              >
+            </p>
+
+            <p id="6th_code">
+              <a href="#code_6"
+                ><strong>Код 6.</strong> Създаване на примерна хистограма с
+                Chart.js</a
+              >
+            </p>
+            <p id="7th_code">
+              <a href="#code_7"
+                ><strong>Код 7.</strong> Създаване на елемент canvas за Chart.js
+                диаграма</a
+              >
+            </p>
+            <p id="8th_code">
+              <a href="#code_8"
+                ><strong>Код 8.</strong> Създаване на примерна линейна диаграма
+                с Chart.js</a
+              >
+            </p>
+            <p id="9th_code">
+              <a href="#code_9"
+                ><strong>Код 9.</strong> Създаване на елемент canvas за Chart.js
+                диаграма</a
+              >
+            </p>
+            <p id="10th_code">
+              <a href="#code_10"
+                ><strong>Код 10.</strong> Създаване на примерна диаграма на
+                разсейване с Chart.js</a
+              >
+            </p>
+            <p id="11th_code">
+              <a href="#code_11"
+                ><strong>Код 11.</strong> Създаване на елемент canvas за
+                Chart.js диаграма</a
+              >
+            </p>
+            <p id="12th_code">
+              <a href="#code_12"
+                ><strong>Код 12.</strong> Създаване на примерна кръгова диаграма
+                с Chart.js</a
+              >
+            </p>
+            <p id="13th_code">
+              <a href="#code_13"
+                ><strong>Код 13.</strong> Създаване на елемент canvas за
+                Chart.js диаграма</a
+              >
+            </p>
+            <p id="14th_code">
+              <a href="#code_14"
+                ><strong>Код 14.</strong> Създаване на примерна радарна диаграма
+                с Chart.js</a
+              >
+            </p>
+            <p id="15th_code">
+              <a href="#code_15"
+                ><strong>Код 15.</strong> Създаване на елемент canvas за
+                Chart.js диаграма</a
+              >
+            </p>
+            <p id="16th_code">
+              <a href="#code_16"
+                ><strong>Код 16.</strong> Създаване на примерна полярна зонална
+                диаграма с Chart.js</a
+              >
+            </p>
+            <p id="17th_code">
+              <a href="#code_17"
+                ><strong>Код 17.</strong> Създаване на елемент canvas за
+                Chart.js диаграма</a
+              >
+            </p>
+            <p id="18th_code">
+              <a href="#code_18"
+                ><strong>Код 18.</strong> Създаване на примерна мехурчеста
+                диаграма с Chart.js</a
+              >
+            </p>
+            <p id="19th_code">
+              <a href="#code_19"
+                ><strong>Код 19.</strong> Създаване на елемент canvas за
+                Chart.js диаграма</a
+              >
+            </p>
+            <p id="20th_code">
+              <a href="#code_20"
+                ><strong>Код 20.</strong> Създаване на примерна смесена диаграма
+                с Chart.js</a
+              >
+            </p>
+          </div>
+        </section>
+        <section id="author_information">
+          <p>
+            <span
+              ><strong>Изготвен от:</strong> Йорданка Стоянова,
+              <strong>ФН:</strong> 62512, <strong>Курс:</strong> III,
+              <strong>Група:</strong> 1</span
+            >
+          </p>
+          <p>
+            <strong>Последна модификация:</strong>
+            Май 10 2023 г.
+          </p>
+        </section>
+      </main>
+    </div>
+    <script src="javascript/mycharts.js"></script>
+  </body>
+</html>

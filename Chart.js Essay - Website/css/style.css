@@ -1,0 +1,206 @@
+body {
+    font-family: Philosopher, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color:#444;
+}
+
+.container {
+    display: flex;
+}
+
+.left-nav {
+    background-color: #F0F3F0;
+    width: 240px;
+    top: 0;
+  bottom: 0;
+    padding: 20px 20px 0px 20px;
+    position: fixed;
+}
+
+.left-nav > a {
+    display: block;
+    color: #444;
+    font-size: 16px;
+    padding: 8px;
+    text-decoration: none;
+    transition: background-color 0.35s ease;
+    border-radius: 5px;
+}
+
+.left-nav > a:not(.charts){
+    margin-bottom: 0;
+    font-weight: 550;
+}
+
+.left-nav > a > .charts:last-child{
+    margin-bottom:3px;
+}
+
+.left-nav > .charts{
+    font-size: 14px;
+    margin-left:15px;
+}
+
+.main {
+    background-color: #fff;
+    width: 100%;
+    padding: 0px 60px;
+    margin-left: 280px;
+    flex: 1;
+}
+
+.container > .main > .mySections:after, #advantages_disadvantages:before {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #333;
+    margin-top: 50px;
+  }
+
+header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
+    margin: 0 0 20px 0 ; 
+    background-color: #BADCC7; 
+    width:100%;
+}
+
+#logo {
+    height: 80px;
+    width: auto;
+    margin-left: 10px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 35px;  
+    color: #fff; 
+    background-color: #BADCC7; 
+    margin-left:40%;
+}
+  
+.main h2 {
+    font-size: 25px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+section, ol>li {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: auto;
+}
+
+::-webkit-scrollbar-track {
+    background: #F0F3F0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #354135;
+    border-radius: 10px;
+    height: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    cursor: pointer; 
+    background: #757575;
+}
+
+.chart-container{
+    position: relative; 
+    height:auto; 
+    width:1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pie-and-doughnut-chart {
+    width:500px;
+    margin-left:290px;
+}
+
+section, ol > li{
+    font-size:16px;
+}
+
+.desc_box{
+    font-size:12px;
+    text-align: left;
+    margin-bottom:-10px;
+    color: #444;
+    margin-top:15px; 
+}
+ 
+div > .desc_box {
+    display: inline-block;
+    margin-right: 330px;
+}
+
+.myCharts{
+    margin-top: 40px;
+}
+
+.left-nav a:hover,
+.left-nav a.active {
+    cursor:pointer;
+    background-color: #5f9e77;
+    color:#f9f9f9;
+    border-radius: 5px;
+}
+
+footer{
+    margin-bottom:30px; 
+}
+
+#sources div{
+    font-size: 11pt;
+}
+
+#sources p {
+	margin-bottom: 10px;
+    margin-top: 0; 
+}
+
+#sources a {
+	transition: 0.25s;
+    color:#444; 
+}
+
+a:link {
+	text-decoration: none;
+}
+
+#sources a:hover {
+	color: #757575;
+	font-size: 12pt;
+    cursor: pointer;
+}
+
+#references a {
+	transition: 0.25s;
+    color:#444; 
+    font-weight: bolder;
+}
+
+sup {
+	font-size: 8pt;
+	vertical-align: super;
+	color: #e55136;
+	font-weight: bolder;
+}
+
+#author_information {
+	font-size: 11pt;
+	text-align: center;
+}
+
