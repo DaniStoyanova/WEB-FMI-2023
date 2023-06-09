@@ -1,0 +1,39 @@
+body {
+	background-color: #DEFDF1;
+	text-align: center;
+}
+
+article {
+	width: 400px;
+	padding: 19px;
+    margin-top: 50px;
+    text-align: center;
+	display: inline-block;
+	border: 1px solid #6EA05D;
+}
+
+.allForms, button {
+	width: 390px;
+	padding: 8px 6px;
+	margin: 6px 0px;
+	box-sizing: border-box;
+	border: #C6D2C5 solid 2px;
+	outline:none;
+}
+
+.allForms:hover{
+	outline: none;
+	box-sizing: border-box;
+	border: #558d3d solid 2px;
+}
+
+button{
+	background-color: #cfe7d9;
+    color: #609147;
+    cursor: pointer;
+}
+
+button:hover{
+	background-color: #558D3D;
+	color: #badcc7;
+}
